@@ -40,6 +40,7 @@ var redraw = function(timestamp) {
 	updateScore(elapsedTime);
 	updateProgrammer(elapsedTime);
 	drawCoffeeMachine(elapsedTime);
+	drawProgrammer(elapsedTime);
 	drawState();
 
 	// paint highscore
@@ -93,6 +94,10 @@ function loadImages(sources, callback) {
 var images = {}
 var sources = {
   coffeemachine: '/assets/coffeemachine.png',
+  bg1: '/assets/bg1.png',
+  bg2: '/assets/bg2.png',
+  bg3: '/assets/bg3.png',
+  programmer: '/assets/programmer.png'
 };
 
 
@@ -179,14 +184,34 @@ var productivity = {
 }
 
 function drawState(){
-	canvas.fillStyle = "#444";
-	canvas.font = "bold 18px sans-serif";
+	canvas.fillStyle = "#eee";
+	canvas.font = "15px monospace";
 	canvas.fillText('Programmed: ' + Math.round(gamestate.score) + 'LOC and writing with ' + Math.round(100*programmer.linesPerSecond)/100 + 'LOC/s', 10, 20);
 }
 
 function updateScore(elapsedTime){
 	if(gamestate.started)
 		gamestate.score = programmer.linesPerSecond * (elapsedTime/1000) + gamestate.score;
+}
+
+var bgglow = 0;
+function drawProgrammer(elapsedTime){
+
+
+
+	// canvas.fillStyle = '#03122b';
+	canvas.fillStyle = '#08324f';
+
+	bgglow = bgglow + elapsedTime;
+	var bg = [images.bg1, images.bg2, images.bg3];
+	canvas.drawImage(images.bg1, 0, 0, canvasElement.width/2+90, canvasElement.height);
+	canvas.drawImage(images.programmer, 0, 0, canvasElement.width/2+90, canvasElement.height);
+
+
+
+	canvas.fillStyle = '#122';
+	canvas.fillRect(canvasElement.width/2+90, 0, 10, canvasElement.height);
+
 }
 
 function drawCoffeeMachine(elapsedTime) {
@@ -202,7 +227,7 @@ function drawCoffeeMachine(elapsedTime) {
 	// canvas.fillStyle = '#1f1f2d';
 	canvas.fillRect(canvasElement.width/2+100, 0, 400, canvasElement.height);
 
-	canvas.fillStyle = '#6d1121';
+	canvas.fillStyle = '#8c4d5d';
 	// canvas.fillRect(canvasElement.width/2-100, canvasElement.height/2+100, 100, -200*(coffeeMachine.fillLevel/coffeeMachine.maxLevel));
 	canvas.fillRect(canvasElement.width/2-86+260, canvasElement.height/2+110, 95, -80*(coffeeMachine.fillLevel/coffeeMachine.maxLevel));
 	canvas.closePath();
