@@ -153,35 +153,16 @@ canvas{
   display: inline-block;
 }
 
+
+/* Tweetbox styling */
+
 #incoming{
   display: inline-block;
   vertical-align: top;
-
+  width: calc(100% - 750px);
+  margin-left: 25px;
+  color: #333
 }
-
-#incoming div{
-  width: 20em;
-  height: 6em;
-  line-height: 6em;
-  text-align: center;
-  cursor: pointer;
-}
-
-.negative{
-
-  background-color: #e45;
-  color: #fde;
-}
-
-.positive{
-
-
-  background-color: #4e5;
-
-}
-
-
-/* Tweetbox styling */
 
 #incoming .decisionContainer {
     position: relative;
@@ -189,15 +170,39 @@ canvas{
     margin: 2rem auto;
 }
 #incoming #tweets {
-    min-height: 7rem;
-    font-size: 2rem;
-    padding: 1rem;
+    min-height: 10rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
     background-color: #c0c0c0;
 }
 #incoming .tweet {
+    padding: 1rem;
     -webkit-transition: opacity 0.5s ease 0.5s;
     transition: opacity 0.5s ease 0.5s;
     opacity: 1;
+    min-height: 10rem;
+}
+#incoming .tweet .userpicture {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    margin: 0 1rem 1rem 0;
+    vertical-align: top;
+}
+#incoming .tweet .userpicture img {
+    width: 3rem;
+    height: 3rem;
+}
+#incoming .tweet .text {
+    width: calc(100% - 4rem);
+    display: inline-block;
+    vertical-align: top;
+}
+#incoming .tweet h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    line-height: 2rem;
 }
 #incoming .tweet.success {
     background-color: #4e5;
@@ -210,20 +215,23 @@ canvas{
 #incoming .tags {
     width: 100%;
     text-align: justify;
+    white-space: nowrap;
 }
 #incoming .tag {
     display: inline-block;
     width: 40%;
-    margin: 4.5%;
-    border: 1px solid #aaa;
-    background-color: #e0e0e0;
-    border-radius: 5px;
+    margin: 5%;
+    border: 1px solid #333;
+    background-color: #c0c0c0;
     text-align: center;
     cursor: pointer;
     min-height: 3rem;
     font-size: 1.5rem;
     line-height: 3rem;
     padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.5rem;
 }
 #incoming .tag:hover {
     background-color: #0F0;

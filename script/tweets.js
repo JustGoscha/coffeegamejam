@@ -1,8 +1,8 @@
 /*globals _:false, $:false, coffeeMachine: false, startDrawCycle: false */
 var tweets = [],
     mixedtweets,
-    tweettemplate = _.template("<div class='tweet'><%= text %></div>"),
-    tweetfilteredtemplate = _.template("<div class='tweet'><%= filteredText %></div>"),
+    tweettemplate = _.template("<div class='tweet'><div class='userpicture'><img src='<%= user.profile_image_url %>' alt='' /></div><div class='text'><h2><%= user.name %></h2><%= text %></div></div>"),
+    tweetfilteredtemplate = _.template("<div class='tweet'><div class='userpicture'><img src='<%= user.profile_image_url %>' alt='' /></div><div class='text'><h2><%= user.name %></h2><%= filteredText %></div></div>"),
     index = -1,
     tag1 = "toomuchcoffee",
     tag2 = "ineedcoffee";
@@ -47,22 +47,26 @@ var initializeTweets = function() {
         startDrawCycle();
     }
 };
-var getHashtagTweets = function (tagname) {
+var getHashtagTweets = function (tagname, callback) {
     "use strict";
     $.ajax({
         "type": "GET",
         "dataType": "JSON",
         "url": "http://www.bringliste.de/coffeegamejam/tweettest.php?hashtag=" + tagname,
-        "success": function(reply){
-            tweets = tweets.concat(reply.statuses);
-            initializeTweets();
-        }
+        "success": callback
     });
 };
 $(function(){
     "use strict";
-    getHashtagTweets(tag1);
-    getHashtagTweets(tag2);
+
+    getHashtagTweets(tag1, function(reply){
+        tweets = tweets.concat(reply.statuses);
+        initializeTweets();
+    });
+    getHashtagTweets(tag2, function(reply){
+        tweets = tweets.concat(reply.statuses);
+        initializeTweets();
+    });
 
     $(".tag").on("click", function(){
         var $this = $(this);
