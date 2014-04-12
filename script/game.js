@@ -1,5 +1,10 @@
 var canvasElement = document.getElementById('game');
 var canvas = canvasElement.getContext('2d');
+
+canvas.imageSmoothingEnabled = false;
+canvas.mozImageSmoothingEnabled = false;
+canvas.webkitImageSmoothingEnabled = false;
+
 var lastTime = new Date();
 
 var clearCanvas = function() {
@@ -62,6 +67,34 @@ var startDrawCycle = function() {
 
 	animFrame(recursiveAnim);
 }
+
+
+
+// load images 
+function loadImages(sources, callback) {
+  var images = {};
+  var loadedImages = 0;
+  var numImages = 0;
+  // get num of sources
+  for(var src in sources) {
+    numImages++;
+  }
+  for(var src in sources) {
+    images[src] = new Image();
+    images[src].onload = function() {
+      if(++loadedImages >= numImages) {
+        callback(images);
+      }
+    };
+    images[src].src = sources[src];
+  }
+}
+
+var images = {}
+var sources = {
+  coffeemachine: '/assets/coffeemachine.png',
+};
+
 
 
 
@@ -162,15 +195,23 @@ function drawCoffeeMachine(elapsedTime) {
 		coffeeMachine.decreaseLevel(elapsedTime*coffeeMachine.declineRate/1000);
 	}
 
-	// machine
-	canvas.fillStyle = '#eee';
-	canvas.fillRect(canvasElement.width/2-100, canvasElement.height/2-100, 100, 200);
+// canvas.fillRect(canvasElement.width/2-86+250, canvasElement.height/2+110;
+
+	canvas.fillStyle = '#bfecdf';
+
+	// canvas.fillStyle = '#1f1f2d';
+	canvas.fillRect(canvasElement.width/2+100, 0, 400, canvasElement.height);
+
+	canvas.fillStyle = '#6d1121';
+	// canvas.fillRect(canvasElement.width/2-100, canvasElement.height/2+100, 100, -200*(coffeeMachine.fillLevel/coffeeMachine.maxLevel));
+	canvas.fillRect(canvasElement.width/2-86+260, canvasElement.height/2+110, 95, -80*(coffeeMachine.fillLevel/coffeeMachine.maxLevel));
 	canvas.closePath();
 
-	// canvas
-	canvas.fillStyle = '#6d1121';
-	canvas.fillRect(canvasElement.width/2-100, canvasElement.height/2+100, 100, -200*(coffeeMachine.fillLevel/coffeeMachine.maxLevel));
-	canvas.closePath();
+	canvas.drawImage(images.coffeemachine, canvasElement.width/2-100+260, canvasElement.height/2-100,132, 254);
+
+	canvas.fillStyle = '#d4c3b7';
+	canvas.fillRect(canvasElement.width/2+100, 404, 400, canvasElement.height);
+
 
 }
 
@@ -183,17 +224,23 @@ var gamestate = {
 }
 
 function init(){
-	// buttons mockup
-	$('.positive').click(function(){
-		coffeeMachine.increaseLevel(50);
-		gamestate.started = true;
-	});
-	$('.negative').click(function(){
-		coffeeMachine.decreaseLevel(50);
-		gamestate.started = true;
-	});
 
-	startDrawCycle();
+	loadImages(sources, function(imgs){
+		images = imgs;
+
+		// buttons mockup
+		$('.positive').click(function(){
+			coffeeMachine.increaseLevel(50);
+			gamestate.started = true;
+		});
+		$('.negative').click(function(){
+			coffeeMachine.decreaseLevel(50);
+			gamestate.started = true;
+		});
+
+
+		startDrawCycle();
+	});
 }
 
 // start game...
