@@ -151,6 +151,10 @@ ul>li{
 /* This is for this site !!*/
 canvas{
   display: inline-block;
+  image-rendering: optimizeSpeed;
+  image-rendering:-o-crisp-edges;
+  image-rendering:-webkit-optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 
