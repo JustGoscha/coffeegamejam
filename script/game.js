@@ -64,8 +64,7 @@ var startDrawCycle = function() {
 	var recursiveAnim = function(timestamp) {
 		redraw(timestamp);
 		animFrame(recursiveAnim);
-	}
-
+	};
 	animFrame(recursiveAnim);
 }
 
@@ -111,13 +110,14 @@ function CoffeeMachine(max_coffee, start_level){
 	this.maxLevel = max_coffee;
 
 	// per second decline
-	this.declineRate = max_coffee/20;
+	this.declineRate = max_coffee/50;
 
 	this.decreaseLevel = function(amount){
 		this.fillLevel = this.fillLevel - amount;
 		if(this.fillLevel < 0 ){
 			// game over
 			this.fillLevel = 0;
+			gameOver();
 		}
 	};
 

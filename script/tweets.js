@@ -1,11 +1,12 @@
-/*globals _:false, $:false, coffeeMachine: false, startDrawCycle: false */
+/*globals _:false, $:false, coffeeMachine: false, startDrawCycle: false, gamestate: false */
 var tweets = [],
     mixedtweets,
     tweettemplate = _.template("<div class='tweet'><div class='userpicture'><img src='<%= user.profile_image_url %>' alt='' /></div><div class='text'><h2><%= user.name %></h2><%= text %></div></div>"),
     tweetfilteredtemplate = _.template("<div class='tweet'><div class='userpicture'><img src='<%= user.profile_image_url %>' alt='' /></div><div class='text'><h2><%= user.name %></h2><%= filteredText %></div></div>"),
     index = -1,
     tag1 = "toomuchcoffee",
-    tag2 = "ineedcoffee";
+    tag2 = "ineedcoffee",
+    successCount = 0;
 
 var showNewtweet = function() {
     "use strict";
@@ -56,36 +57,69 @@ var getHashtagTweets = function (tagname, callback) {
         "success": callback
     });
 };
+var over = false;
+var gameOver = function () {
+    "use strict";
+    if(over){
+        return;
+    }
+    over = true;
+    $("body").append("<div id='overlay'><div class='gocontainer'><h2>Game Over</h2></div></div>");
+    setTimeout(function(){
+        $("#overlay").addClass("show");
+    }, 0);
+};
+
 $(function(){
     "use strict";
 
-    getHashtagTweets(tag1, function(reply){
-        tweets = tweets.concat(reply.statuses);
-        initializeTweets();
-    });
-    getHashtagTweets(tag2, function(reply){
-        tweets = tweets.concat(reply.statuses);
-        initializeTweets();
+    $("#start").on("click", function() {
+        tag1 = $("#tag1").val();
+        tag2 = $("#tag2").val();
+        $("#formoverlay").remove();
+        setTimeout(function(){
+            getHashtagTweets(tag1, function(reply){
+                tweets = tweets.concat(reply.statuses);
+                initializeTweets();
+            });
+            getHashtagTweets(tag2, function(reply){
+                tweets = tweets.concat(reply.statuses);
+                initializeTweets();
+            });
+        }, 0);
     });
 
     $(".tag").on("click", function(){
         var $this = $(this);
         var tweet = mixedtweets[index];
-        tweet.clicked = true;
-        $("#tweets").html(tweettemplate(tweet));
-        gamestate.started = true;
-        setTimeout(function(){
+        if(tweet.clicked){
+            return;
+        } else {
+            mixedtweets[index].clicked = true;
+            $("#tweets").html(tweettemplate(tweet));
+            gamestate.started = true;
             if(tweet.tag == $this.data("tag")){
-                $("#tweets .tweet").addClass("success");
-                coffeeMachine.increaseLevel(50);
+                var up = 100;
+                if(successCount > 3){
+                    up += 100;
+                }
+                coffeeMachine.increaseLevel(up);
+                successCount++;
             } else {
-                $("#tweets .tweet").addClass("fail");
                 coffeeMachine.decreaseLevel(50);
-
+                successCount = 0;
             }
-        }, 0);
-        setTimeout(function(){
-            showNewtweet();
-        }, 1000);
+            setTimeout(function(){
+                if(tweet.tag == $this.data("tag")){
+                    $("#tweets .tweet").addClass("success");
+                } else {
+                    $("#tweets .tweet").addClass("fail");
+                }
+            }, 0);
+            setTimeout(function(){
+                showNewtweet();
+            }, 800);
+        }
     });
+
 });
