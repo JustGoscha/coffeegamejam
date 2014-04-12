@@ -44,7 +44,7 @@ var initializeTweets = function() {
         /* game starts here... */
         mixedtweets = _.shuffle(tweets);
         showNewtweet();
-        startDrawCycle();
+        init();
     }
 };
 var getHashtagTweets = function (tagname, callback) {
@@ -73,6 +73,7 @@ $(function(){
         var tweet = mixedtweets[index];
         tweet.clicked = true;
         $("#tweets").html(tweettemplate(tweet));
+        gamestate.started = true;
         setTimeout(function(){
             if(tweet.tag == $this.data("tag")){
                 $("#tweets .tweet").addClass("success");
@@ -80,6 +81,7 @@ $(function(){
             } else {
                 $("#tweets .tweet").addClass("fail");
                 coffeeMachine.decreaseLevel(50);
+
             }
         }, 0);
         setTimeout(function(){

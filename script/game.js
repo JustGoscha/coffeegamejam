@@ -44,7 +44,7 @@ var redraw = function(timestamp) {
 	drawState();
 
 	// paint highscore
-	
+
 	// paint
 
 	// draw FPS
@@ -71,7 +71,7 @@ var startDrawCycle = function() {
 
 
 
-// load images 
+// load images
 function loadImages(sources, callback) {
   var images = {};
   var loadedImages = 0;
@@ -105,7 +105,7 @@ var sources = {
 
 // ------------ actual game state variables ----------
 
- 
+
 function CoffeeMachine(max_coffee, start_level){
 	this.fillLevel = start_level;
 	this.maxLevel = max_coffee;
@@ -122,7 +122,7 @@ function CoffeeMachine(max_coffee, start_level){
 	};
 
 	this.increaseLevel = function(amount){
-		this.fillLevel = this.fillLevel + amount; 
+		this.fillLevel = this.fillLevel + amount;
 		if(this.fillLevel >= this.maxLevel){
 			this.fillLevel = this.maxLevel;
 		}
@@ -169,7 +169,7 @@ function updateProgrammer(elapsedTime){
 	} else {
 		programmer.productivity = productivity.MEDIUM;
 		// medium productivity
-		if(programmer.linesPerSecond>1){ 
+		if(programmer.linesPerSecond>1){
 			 programmer.linesPerSecond = programmer.linesPerSecond - (((programmer.linesPerSecond-1)/10)*elapsedTime)/1000;
 		} else {
 			programmer.linesPerSecond = 1;
@@ -252,18 +252,6 @@ function init(){
 
 	loadImages(sources, function(imgs){
 		images = imgs;
-
-		// buttons mockup
-		$('.positive').click(function(){
-			coffeeMachine.increaseLevel(50);
-			gamestate.started = true;
-		});
-		$('.negative').click(function(){
-			coffeeMachine.decreaseLevel(50);
-			gamestate.started = true;
-		});
-
-
 		startDrawCycle();
 	});
 }
