@@ -9,7 +9,7 @@
 a{
 	text-decoration: none;
 	color: #2b7;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 a:hover{
@@ -23,7 +23,7 @@ body{
 	height: 100%;
 	line-height: 1.5em;
 	color: #ddd;
-	background-color: #444;	
+	background-color: #444;
 }
 
 h1,
@@ -178,5 +178,54 @@ canvas{
 
   background-color: #4e5;
 
+}
+
+
+/* Tweetbox styling */
+
+#incoming .decisionContainer {
+    position: relative;
+    width: 100%;
+    margin: 2rem auto;
+}
+#incoming #tweets {
+    min-height: 7rem;
+    font-size: 2rem;
+    padding: 1rem;
+    background-color: #c0c0c0;
+}
+#incoming .tweet {
+    -webkit-transition: opacity 0.5s ease 0.5s;
+    transition: opacity 0.5s ease 0.5s;
+    opacity: 1;
+}
+#incoming .tweet.success {
+    background-color: #4e5;
+    opacity: 0;
+}
+#incoming .tweet.fail {
+    background-color: #e45;
+    opacity: 0;
+}
+#incoming .tags {
+    width: 100%;
+    text-align: justify;
+}
+#incoming .tag {
+    display: inline-block;
+    width: 40%;
+    margin: 4.5%;
+    border: 1px solid #aaa;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    min-height: 3rem;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    padding: 0;
+}
+#incoming .tag:hover {
+    background-color: #0F0;
 }
 

@@ -3,6 +3,8 @@
 		<title>Coffee Game Jam</title>
 		<link rel="stylesheet" href="style/style.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="underscore-min.js"></script>
+
 	</head>
 <body>
 	<canvas id="game" width="700" height="500">
@@ -10,8 +12,16 @@
 	<div id="incoming">
 		<div class="positive">positive message</div>
 		<div class="negative">negative message</div>
+		<div class="decisionContainer">
+			<div id="tweets">Fetching tweets...</div>
+			<div class="tags">
+				<div class="tag tag1" data-tag=""></div>
+				<div class="tag tag2" data-tag=""></div>
+			</div>
+		</div>
 	</div>
 	<script type="text/javascript" src="script/game.js"></script>
+	<script type="text/javascript" src="script/tweets.js"></script>
 
 
 </body>
