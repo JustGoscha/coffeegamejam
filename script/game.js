@@ -269,4 +269,4 @@ function init(){
 }
 
 // start game...
-init();
+// init();
